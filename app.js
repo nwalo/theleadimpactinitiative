@@ -21,7 +21,7 @@ app.get("/contacts", (req, res) => {
   res.render("contacts");
 });
 
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 2000;
 
 app.listen(port, () => {
   console.log("Server is running at port " + port);

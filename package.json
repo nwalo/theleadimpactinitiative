@@ -4,7 +4,7 @@
   "description": "A non-profit organization working to promote and contribute to global climate and environmental sustainability",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "keywords": [
     "[Responsible",
