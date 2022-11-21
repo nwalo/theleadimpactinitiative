@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ECO HTML</title>
+    <!-- CSS FILES START -->
+    <%- include('partials/head.ejs') %>
+    <!-- CSS FILES End -->
+  </head>
+  <body>
+    <%- include('partials/navigation.ejs') %>
+         <!--Header End-->
+      <!--Causes Start-->
+      <section class="wf100 p80">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="myaccount-form">
+                <h3>Register Your Account</h3>
+                <form>
+                  <ul class="row">
+                    <li class="col-md-6">
+                      <div class="input-group">
+                        <input
+                           id="r-full-name"
+                          type="text"
+                          class="form-control"
+                          placeholder="Your Name"
+                          required
+                          name="fullname"
+                        />
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Contact Number"
+                          required
+                          name="phone"
+                        />
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Email Address"
+                          required
+                          name="email"
+                        />
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="User Name"
+                          name="name"
+                        />
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Password"
+                          name="password"
+                        />
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Re-enter Password"
+                          
+                        />
+                      </div>
+                    </li>
+                    <li class="col-md-12">
+                      <div class="input-group form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="exampleCheck1"
+                          required
+                          
+                        />
+                        <label class="form-check-label" for="exampleCheck1"
+                          >I agree to the Terms of
+                          <a href="#">Services & Privacy Plicy</a></label
+                        >
+                      </div>
+                    </li>
+                    <li class="col-md-12">
+                      <button id="register" class="register">Register Your Account</button>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="login-box">
+                <h3>Login Account</h3>
+                <form id="login"> 
+                  <div class="input-group">
+                    <input
+                    id="l-username"
+                      type="text"
+                      class="form-control"
+                      placeholder="Username/Email"
+                      required
+                    />
+                  </div>
+                  <div class="input-group">
+                    <input
+                    id="l-password"
+                      type="password"
+                      class="form-control"
+                      placeholder="Password"
+                      required
+                    />
+                  </div>
+                  <div class="input-group" >                    
+                     <a href="#" style="color: #ffffff !important;">Forgot Password ?</a>                      
+                  </div>
+                  <div class="input-group">
+                    <button class="login-btn">Login Account</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--Causes End-->
+    </div>
+
+    <div id="page" style="display: none;"><%= page  %></div>
+    <!--   JS Files Start  -->
+    <%- include('partials/scripts') %>
+    
+
+   <script>
+      var getPage = $('#page').text()
+      
+      getPage === 'login' ? $('#l-username').focus() : $('#r-full-name').focus() 
+
+      $('#register').attr('disabled', true)
+
+      $('#exampleCheck1').on('change', (e)=>{
+         if($('#exampleCheck1').is(':checked')){
+            $('#register').attr('disabled', false)
+         }else{
+            $('#register').attr('disabled', true)
+         }
+      })
+   </script>
+  </body>
+</html>
