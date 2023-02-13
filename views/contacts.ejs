@@ -13,10 +13,10 @@
          <section class="wf100 p100 inner-header">
             <div class="container">
                <h1>Contact Us</h1>
-               <ul>
+               <!-- <ul>
                   <li><a href="#">Home</a></li>
                   <li><a href="#"> Contact </a></li>
-               </ul>
+               </ul> -->
             </div>
          </section>
          <!--Inner Header End--> 
@@ -27,25 +27,28 @@
                   <div class="col-md-6">
                      <div class="contact-form">
                         <h3>Feel Free to Contact us</h3>
-                        <form>
+                        <form id="contact">
                         <ul class="cform">
                            <li class="half pr-15">
-                              <input type="text" class="form-control" placeholder="Full Name">
+                              <input id="fullName" type="text" class="form-control" placeholder="Full Name">
                            </li>
                            <li class="half pl-15">
-                              <input type="text" class="form-control" placeholder="Email">
+                              <input id="email" type="text" class="form-control" placeholder="Email">
                            </li>
                            <li class="half pr-15">
-                              <input type="text" class="form-control" placeholder="Contact">
+                              <input id="phone" type="text" class="form-control" placeholder="Contact">
                            </li>
                            <li class="half pl-15">
-                              <input type="text" class="form-control" placeholder="Subject">
+                              <input id="subject" type="text" class="form-control" placeholder="Subject">
                            </li>
                            <li class="full">
-                              <textarea class="textarea-control" placeholder="Message"></textarea>
+                              <textarea id="message" class="textarea-control" placeholder="Message"></textarea>
                            </li>
                            <li class="full">
                               <input type="submit" value="Contact us" class="fsubmit">
+                           </li>
+                           <li class="full">                              
+                              <p id="msg" class=" m-0" style="text-align: center;">  </p>
                            </li>
                         </ul>
                      </form>
@@ -83,7 +86,7 @@
                   <div class="col-md-4">
                      <div class="c-info">
                         <h6>Email:</h6>
-                        <p>theleadimpactinitiative@gmail.com</p>
+                        <p>theleadimpact@gmail.com</p>
                      </div>
                   </div>
                   <!--Contact Info End--> 

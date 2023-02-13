@@ -4108,19 +4108,19 @@ Causes Pages End
 Projects Pages Start
 *********************************/
 
-.projects-grid .ser-txt h5 {
+.projects-grid .ser-txt h6 {
   font-weight: 700;
   width: 80%;
   margin: 0px;
 }
-.projects-grid .ser-txt h5 a {
+.projects-grid .ser-txt h6 a {
   color: #222;
   line-height: 32px;
 }
 .projects-grid .ser-txt {
-  padding: 25px 30px;
+  padding: 25px 10px;
 }
-.projects-grid .ser-box:hover .ser-txt h5 a {
+.projects-grid .ser-box:hover .ser-txt h6 a {
   color: #66bb6a;
 }
 .ser-thumb a:hover,

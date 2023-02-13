@@ -452,13 +452,12 @@
                   <div class="section-title">
                     <h3>Join us Now</h3>
                   </div>
-                  <form  id="join-us-form" >
+                  <form action="/join" method="post">
                     <ul>
                       <li>
                         <input
                           type="text"
                           class="form-control"
-                          id="fullName"
                           placeholder="Your Name"
                           aria-label="Your Name"
                           name="fullname"
@@ -471,7 +470,6 @@
                           class="form-control"
                           placeholder="Email Address"
                           name="email"
-                          id="email"
                           aria-label="Email Address"
                         />
                       </li>
@@ -481,7 +479,6 @@
                           class="form-control"
                           placeholder="Contact"
                           name="phone"
-                          id="phone"
                           aria-label="Contact"
                         />
                       </li>
@@ -492,9 +489,9 @@
                           value="Signup to Join us"
                         />
                       <!-- </li> -->
+                      <div style="width: fit-content; padding: 5px 10px; color: #ffffff; background: tomato; margin: 10px auto 0;"><%= msg%></div>
                     </ul>
                   </form>
-                  <p id="msg" class="mt-4 mx-2" style="text-align: center;"> </p>
                 </div>
               </div>
             </div>
@@ -502,15 +499,15 @@
         </div>
         <section class="home2-about wf100 p100 gallery">
           <div class="container" >
-             <div class="row" style="width: 90%;margin: auto; display: flex; align-items: center;">
+             <div class="row" style="width: 80%;margin: auto; display: flex; align-items: center;">
                 <div class="col-md-5">
-                    <img src="images/founder.jpeg" width="350px" alt=""> 
+                    <img src="images/founder.jpeg" width="300px" alt=""> 
                 </div>
                 <div class="col-md-7">
                    <div class="h2-about-txt">
-                      <h3 class="mt-3">About The Founder</h3>
+                      <h3>About The Founder</h3>
                       <!-- <h2>Eco-friendly products can be made from scratch.</h2> -->
-                      <p> Lawrence Akpoterai is the founder and Chief Executive Officer of The Lead Impact Initiative. He is a passionate climate and environment leader with years of experience in social impact and development. He has an academic background in Geography from the University of Ibadan, Nigeria and a master’s degree in Climate Change and Adaptation from the University of Nairobi, Kenya. He is a a scholar and researcher with the DAAD Global Climate Centre, African Climate and Environment Centre - Future African Savanna and works at the interface between science, policy and practice. </p>
+                      <p> Lawrence has academic backgrounds in Geography from the University of Ibadan, Nigeria and Climate Change and Adaptation from the University of Nairobi, Kenya. He is passionate about environmental sustainability and works with young persons to contribute to securing a safe and sustainable planet. </p>
                       <!-- <a class="aboutus" href="/about">More About us</a>  -->
                    </div>
                 </div>
@@ -721,8 +718,6 @@
       <!--Footer End-->
     </div>
     <!--   JS Files Start  -->    
-
     <%- include('partials/scripts') %>
-    
   </body>
 </html>

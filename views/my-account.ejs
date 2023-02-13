@@ -15,8 +15,8 @@
           <div class="row">
             <div class="col-lg-8">
               <div class="myaccount-form">
-                <h3>Register Your Account</h3>
-                <form>
+                <h3>Register</h3>
+                <form action="/register" method="post">
                   <ul class="row">
                     <li class="col-md-6">
                       <div class="input-group">
@@ -26,7 +26,7 @@
                           class="form-control"
                           placeholder="Your Name"
                           required
-                          name="fullname"
+                          name="fullName"
                         />
                       </div>
                     </li>
@@ -48,7 +48,7 @@
                           class="form-control"
                           placeholder="Email Address"
                           required
-                          name="email"
+                          name="username"
                         />
                       </div>
                     </li>
@@ -58,14 +58,14 @@
                           type="text"
                           class="form-control"
                           placeholder="User Name"
-                          name="name"
+                          name="nick"
                         />
                       </div>
                     </li>
                     <li class="col-md-6">
                       <div class="input-group">
                         <input
-                          type="text"
+                          type="password"
                           class="form-control"
                           placeholder="Password"
                           name="password"
@@ -75,10 +75,9 @@
                     <li class="col-md-6">
                       <div class="input-group">
                         <input
-                          type="text"
+                          type="password"
                           class="form-control"
-                          placeholder="Re-enter Password"
-                          
+                          placeholder="Re-enter Password"                          
                         />
                       </div>
                     </li>
@@ -93,12 +92,12 @@
                         />
                         <label class="form-check-label" for="exampleCheck1"
                           >I agree to the Terms of
-                          <a href="#">Services & Privacy Plicy</a></label
+                          <a href="#">Services & Privacy Policy</a></label
                         >
                       </div>
                     </li>
                     <li class="col-md-12">
-                      <button id="register" class="register">Register Your Account</button>
+                      <button id="register" type="submit" class="register">Register</button>
                     </li>
                   </ul>
                 </form>
@@ -106,14 +105,15 @@
             </div>
             <div class="col-lg-4">
               <div class="login-box">
-                <h3>Login Account</h3>
-                <form id="login"> 
+                <h3>Login </h3>
+                <form id="login" action="/login" method="post"> 
                   <div class="input-group">
                     <input
                     id="l-username"
                       type="text"
                       class="form-control"
-                      placeholder="Username/Email"
+                      placeholder="Email Address"
+                      name="username"
                       required
                     />
                   </div>
@@ -123,6 +123,7 @@
                       type="password"
                       class="form-control"
                       placeholder="Password"
+                      name="password"
                       required
                     />
                   </div>
@@ -130,16 +131,22 @@
                      <a href="#" style="color: #ffffff !important;">Forgot Password ?</a>                      
                   </div>
                   <div class="input-group">
-                    <button class="login-btn">Login Account</button>
+                    <button type="submit" class="login-btn">Login</button>
                   </div>
                 </form>
               </div>
             </div>
           </div>
         </div>
+
+        <% if(errorMsg){ %> 
+          <div style="width: fit-content; padding: 5px 10px; color: #ffffff; background: tomato; margin: 10px auto 0;"><%= errorMsg%></div>
+          <% } %>
       </section>
+
       <!--Causes End-->
     </div>
+
 
     <div id="page" style="display: none;"><%= page  %></div>
     <!--   JS Files Start  -->

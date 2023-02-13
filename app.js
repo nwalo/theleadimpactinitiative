@@ -4,11 +4,128 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const ejs = require("ejs");
 const _ = require("lodash");
+const moment = require("moment");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+const mongoose = require("mongoose");
+const findOrCreate = require("mongoose-findorcreate");
+const session = require("express-session");
+const cors = require("cors");
+const axios = require("axios");
+const sgMail = require("@sendgrid/mail");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname + "/public")));
+app.use(express.json());
+// app.use(express.static(path.join(__dirname + "/public")));
+app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cors());
+
+//MONGOBD CONNECTIONS
+
+mongoose.set("strictQuery", false);
+// mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
+//   useUnifiedTopology: true,
+// });
+mongoose.connect(
+  "mongodb+srv://Admin-Nwalo:nobicious97@theleadimpactinitiative.y4osptq.mongodb.net/?retryWrites=true&w=majority",
+  {
+    useUnifiedTopology: true,
+  }
+);
+
+// SCHEMA DEFINITIONS
+
+const userSchema = new mongoose.Schema({
+  username: String,
+  fullName: String,
+  phone: String,
+  nick: String,
+});
+
+const volunteerSchema = new mongoose.Schema({
+  fullName: String,
+  email: String,
+  phone: String,
+});
+
+// MONGODB PLUGINS
+
+userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(findOrCreate);
+
+// MODEL DEFINITIONS
+
+const User = mongoose.model("User", userSchema);
+const Volunteer = mongoose.model("Volunteer", volunteerSchema);
+
+passport.use(User.createStrategy());
+
+// GLOBAL SERIALIZATION
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+
+// SENDGRID CONFIGURATION
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+sendMail = (htm, email, subject, res, clientEmail, clientMsg) => {
+  const msg = {
+    to: email, // Change to your recipient
+    from: process.env.SENDER_MAIL, // Change to your verified sender
+    subject: subject,
+    html: htm,
+  };
+
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log("Email sent");
+      return res.status(200).json({ status: true });
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(400).json({ status: false });
+    });
+
+  if (clientEmail && clientMsg) {
+    const msgCli = {
+      to: clientEmail, // Change to your recipient
+      from: process.env.SENDER_MAIL, // Change to your verified sender
+      subject: subject,
+      html: clientMsg,
+    };
+
+    sgMail
+      .send(msgCli)
+      .then(() => {
+        console.log("Email sent to client");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+};
+
+// API ENDPOINTS / ROUTES
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -25,39 +142,205 @@ app.get("/account/:page", (req, res) => {
   ) {
     res.render("my-account", {
       page: _.lowerCase(req.params.page) === "login" ? "login" : "register",
+      errorMsg: "",
     });
   } else {
-    console.log("err");
     res.render("page-404");
   }
 });
 
 app.get("/blog", (req, res) => {
-  res.render("blog");
+  // res.render("blog");
+  res.redirect("/coming-soon");
 });
 
 app.get("/blog/:id", (req, res) => {
   res.render("blog-details");
 });
 
+app.get("/coming-soon", (req, res) => {
+  res.render("coming-soon");
+});
+
 app.get("/contacts", (req, res) => {
   res.render("contacts");
 });
 
+app.post("/contacts", (req, res) => {
+  const { fullName, email, phone, message, subject } = req.body;
+
+  let msg = `<h3>New Contact / Enquiry</h3>
+  <p>${fullName}, has just contacted you from the website.</p>
+  <p>You can follow up with the following details:</p>
+  <ul> <li>Full Name: ${fullName} </li> <li>Email: ${email} </li> <li>Phone Number: ${phone} </li> <li>Subject: ${subject} </li> <li>Message: ${message} </li> </ul>
+  <small style='text-align: right; margin-top: 10px'> <img src='/images/tlii_logo.png' alt='logo' />  The Lead Impact Initiative ${new Date().getFullYear()}</small>`;
+
+  sendMail(msg, process.env.CLIENT_MAIL, "New Contact/Enquiry", res);
+});
+
 app.get("/donation", (req, res) => {
-  res.render("donation");
+  // res.render("donation");
+  res.redirect("/coming-soon");
+});
+
+app.get("/events", (req, res) => {
+  // res.render("events");
+  res.redirect("/coming-soon");
+});
+
+app.get("/events/:id", (req, res) => {
+  res.render("event-details");
+});
+
+app.post("/join", (req, res) => {
+  const { email, fullName, phone } = req.body;
+
+  const volunteer = new Volunteer({
+    email,
+    fullName,
+    phone,
+  });
+
+  let msg = `<h3>New Volunteer</h3>
+  <p>${fullName}, has just volunteered  to contribute to global efforts on climate and environmental sustainability.</p>
+  <p>You can follow up with the following details:</p>
+  <ul> <li>Full Name: ${fullName} </li> <li>Email: ${email} </li> <li>Phone: ${phone} </li> </ul>
+  <small style='text-align: right; margin-top: 10px'> The Lead Impact Initiative ${new Date().getFullYear()}</small>`;
+
+  let welcomeMsg = `<h3>New Volunteer</h3>
+  <p>Hi ${fullName}, </p>
+  <p>Thank you for volunteering to contribute to global efforts on climate and environmental sustainability. Please stay tuned, you will get a follow up email from us.</p>
+  
+  <small style='text-align: right; margin-top: 10px'> The Lead Impact Initiative ${new Date().getFullYear()}</small>`;
+  Volunteer.findOne({ email: req.body.email }, (err, found) => {
+    if (err) {
+      return console.log(err);
+    } else {
+      if (!found) {
+        volunteer.save((err) => {
+          if (!err) {
+            sendMail(
+              msg,
+              process.env.CLIENT_MAIL,
+              "New Volunteer",
+              res,
+              email,
+              welcomeMsg
+            );
+
+            // return res.json({ status: true });
+          } else {
+            console.log("errr");
+          }
+        });
+      }
+
+      if (found) {
+        return res.json({ status: false });
+      }
+    }
+  });
+  // res.render("join");
 });
 
 app.get("/projects", (req, res) => {
   res.render("projects");
 });
 
-app.get("/events", (req, res) => {
-  res.render("events");
+// app.get("/projects/:id", (req, res) => {
+//   res.render("projects-details");
+// });
+
+app.get("/projects/clean_up_exercise_at_the_ui", (req, res) => {
+  res.render("projects-details");
 });
 
-app.get("/events/:id", (req, res) => {
-  res.render("event-details");
+app.get("/projects/climate_change_is_real", (req, res) => {
+  res.render("projects-details-2");
+});
+
+app.get("/projects/climate_change_is_real_2", (req, res) => {
+  res.render("projects-details-3");
+});
+
+app.post("/login", function (req, res) {
+  const user = new User({
+    username: req.body.username,
+    password: req.body.password,
+  });
+
+  passport.authenticate("local", function (err, user, info) {
+    if (err) {
+      console.log(err);
+    }
+    if (!user) {
+      return res.render("my-account", {
+        errorMsg: "Invalid email address or password !",
+        page: "login",
+      });
+    }
+
+    req.logIn(user, function (err) {
+      //This creates a log in session
+      if (err) {
+        res.render("my-account", {
+          errorMsg: "Connection errror, unable to process request.",
+          page: "login",
+        });
+      } else {
+        console.log("logged in");
+        res.redirect("/admin");
+      }
+    });
+  })(req, res);
+});
+
+app.get("/logout", function (req, res) {
+  req.logout((err) => {
+    console.log(err);
+  });
+  res.redirect("/account/login");
+});
+
+app.post("/register", function (req, res) {
+  User.register(
+    {
+      username: req.body.username,
+    },
+    req.body.password,
+    function (err) {
+      if (err) {
+        res.render("my-account", {
+          errorMsg:
+            "Error! User registration failed - Email address already exist.",
+          page: "register",
+        });
+      } else {
+        passport.authenticate("local")(req, res, function () {
+          User.updateOne(
+            {
+              _id: req.user.id,
+            },
+            {
+              fullName: _.capitalize(req.body.fullName),
+              nick: _.capitalize(req.body.nick),
+              phone: req.body.phone,
+            },
+            function (err) {
+              if (!err) {
+                res.render("admin");
+              } else {
+                res.render("my-account", {
+                  errorMsg: "Error ! User registration failed.",
+                  page: "register",
+                });
+              }
+            }
+          );
+        });
+      }
+    }
+  );
 });
 
 app.get("*", (req, res) => {
