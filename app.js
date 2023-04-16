@@ -13,10 +13,11 @@ const session = require("express-session");
 const cors = require("cors");
 const axios = require("axios");
 const sgMail = require("@sendgrid/mail");
+const multer = require("multer");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 // app.use(express.static(path.join(__dirname + "/public")));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
@@ -59,6 +60,72 @@ const volunteerSchema = new mongoose.Schema({
   phone: String,
 });
 
+const blogSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    bannerImage: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const eventSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    bannerImage: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const projectSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+    },
+    bannerImage: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
 // MONGODB PLUGINS
 
 userSchema.plugin(passportLocalMongoose);
@@ -68,6 +135,9 @@ userSchema.plugin(findOrCreate);
 
 const User = mongoose.model("User", userSchema);
 const Volunteer = mongoose.model("Volunteer", volunteerSchema);
+const Blog = mongoose.model("Blog", blogSchema);
+const Project = mongoose.model("Project", projectSchema);
+const Event = mongoose.model("Event", eventSchema);
 
 passport.use(User.createStrategy());
 
@@ -125,6 +195,19 @@ sendMail = (htm, email, subject, res, clientEmail, clientMsg) => {
   }
 };
 
+// MULTER CONFIG
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
 // API ENDPOINTS / ROUTES
 
 app.get("/", (req, res) => {
@@ -147,6 +230,63 @@ app.get("/account/:page", (req, res) => {
   } else {
     res.render("page-404");
   }
+});
+
+app.get("/admin", (req, res) => {
+  if (req.isAuthenticated()) {
+    console.log("yes");
+    res.render("admin");
+  } else {
+    console.log("no");
+    res.redirect("/account/login");
+  }
+});
+
+app.post("/admin", upload.single("file"), (req, res) => {
+  let post = {};
+
+  if (req.body.type === "blog") {
+    post = new Blog({
+      title: _.lowerCase(req.body.title),
+      type: _.lowerCase(req.body.type),
+      content: req.body.content,
+      bannerImage: req.body.banner,
+    });
+  }
+  if (req.body.type === "event") {
+    post = new Event({
+      title: _.capitalize(req.body.title),
+      type: _.lowerCase(req.body.type),
+      content: req.body.content,
+      // bannerImage: req.body.banner,
+    });
+  }
+  if (req.body.type === "project") {
+    post = new Project({
+      title: _.capitalize(req.body.title),
+      type: _.lowerCase(req.body.type),
+      content: req.body.content,
+      bannerImage: req.body.banner,
+    });
+  }
+
+  post.save((err) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({
+        data: `Error, unable to create new ${_.capitalize(
+          req.body.type
+        )} post.`,
+        message: err,
+        status: false,
+      });
+    } else {
+      res.status(200).json({
+        data: `${_.capitalize(req.body.type)} post has been created.`,
+        status: true,
+      });
+    }
+  });
 });
 
 app.get("/blog", (req, res) => {
@@ -297,7 +437,7 @@ app.post("/login", function (req, res) {
 
 app.get("/logout", function (req, res) {
   req.logout((err) => {
-    console.log(err);
+    err && console.log(err);
   });
   res.redirect("/account/login");
 });

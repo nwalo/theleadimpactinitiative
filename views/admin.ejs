@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ECO HTML</title>
+    <!-- CSS FILES START -->
+    <%- include('partials/head.ejs') %>
+    <!-- CSS FILES End -->
+  </head>
+  <body>
+    <%- include('partials/navigation.ejs') %>
+         <!--Header End-->
+      <!--Causes Start-->
+      <style>
+        label, button{
+          margin-top: 20px;
+        }
+
+        .hide{
+          display: none;
+        }
+      </style>
+      <section class="wf100 p80">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="myaccount-form">
+                <h3>Create Collection</h3>
+                <form action="/admin" method="post" enctype="multipart/form-data">
+                  <ul class="row">
+                    <li class="col-md-6">
+                      <div class="">
+                        <label for="">Select Type: </label> <br>
+                        <select name="type" class="form-control onchange" id="type">
+                          <option value="">Choose ...</option>
+                          <option value="blog">Blog</option>
+                          <option value="event">Event</option>
+                          <option value="project">Project</option>
+                        </select>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="">
+                        <label for="">Title: </label> <br>
+                        <input
+                          id="title"
+                          style="height: 40px;"
+                          type="text"
+                          class="form-control onchange"
+                          placeholder="Title"
+                          required
+                          name="title"
+                        />
+                      </div>
+                    </li>
+                   
+                    <li class="col-md-12">
+                      <div class="">
+                        <label>Banner Image: </label> <br> <input id="banner_image" class="onchange" required type="file" name="file">
+                      </div>                       
+                    </li>
+                    <li class="col-md-12">
+                      <div class="">
+                        <label>Content  : </label> <textarea class="form-control" name="content" id="content" rows="10" placeholder="Write your content here"></textarea>
+                      </div>                       
+                    </li>
+                    <!-- <li class="col-md-12">
+                      <div class="">
+                        <label>Supporting Image: </label> <br> <input id="image" required type="file" name="file">
+                      </div>                       
+                    </li>
+                    <li class="col-md-12">
+                      <div class="">
+                        <label>Content 2  : </label> <textarea class="form-control" name="content2" id="" rows="5" placeholder="Write your content 2 here"></textarea>
+                      </div>                       
+                    </li> -->
+                    <li class="col-md-12">
+                      <button id="preview" type="button" style="background-color: #ffffff; border: 1px solid #66bb6a; color: #66bb6a;" class="register show">Preview</button>
+                      <button id="create" type="submit" class="register hide">Create</button>
+                    </li>
+                  </ul>
+                </form>
+                <div id="msg" style="margin-top: 20px; text-align: center;"></div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-2"></div> -->
+            <div class="col-lg-6">
+              <div class="login-box">
+                <h3>Preview </h3>
+                <div style="display: flex;justify-content: center; width: 100%; padding: 0 30px; position: relative;">
+                  <img id="bannerPreview" src="./images/logo.png" style="width: 80%;  max-height: 200px;" alt="">
+                </div>
+               <div style="margin: 30px 0; font-size: 11px;" id="contentPreview">               
+                Content ...
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+ 
+        <script src="https://cdn.tiny.cloud/1/389dk9hmiohyrnvo1t6i02swtfly47ildidbpxesuwselmrf/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+        <script>
+          tinymce.init({
+            selector: 'textarea', toolbar_mode: 'floating',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            branding: false,
+            images_file_types: 'jpg,svg,webp,jpeg,png',
+            plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table paste imagetools wordcount image code'
+  ],
+  image_title: true,
+  /* enable automatic uploads of images represented by blob or data URIs*/
+  automatic_uploads: true,
+  /*
+    URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+    images_upload_url: 'postAcceptor.php',
+    here we add custom filepicker only to Image dialog
+  */
+  file_picker_types: 'image',
+  init_instance_callback: function(editor) {
+    editor.on('change', function(e) {
+      console.log('The ' + e.type + ' command was fired.');
+      $("#preview").addClass("show");
+      $("#preview").removeClass("hide");
+      $("#create").removeClass("show");
+      $("#create").addClass("hide");
+      $('#msg').text('')
+      $("#create").attr("disabled", false);
+    });
+  },
+  /* and here's our custom image picker*/
+  file_picker_callback: function (cb, value, meta) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+
+    /*
+      Note: In modern browsers input[type="file"] is functional without
+      even adding it to the DOM, but that might not be the case in some older
+      or quirky browsers like IE, so you might want to add it to the DOM
+      just in case, and visually hide it. And do not forget do remove it
+      once you do not need it anymore.
+    */
+
+    input.onchange = function () {
+      var file = this.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function () {
+        /*
+          Note: Now we need to register the blob in TinyMCEs image blob
+          registry. In the next release this part hopefully won't be
+          necessary, as we are looking to handle it internally.
+        */
+        var id = 'blobid' + (new Date()).getTime();
+        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+        var base64 = reader.result.split(',')[1];
+        var blobInfo = blobCache.create(id, file, base64);
+        blobCache.add(blobInfo);
+
+        /* call the callback and populate the Title field with the file name */
+        cb(blobInfo.blobUri(), { title: file.name });
+      };
+      reader.readAsDataURL(file);
+    };
+
+    input.click();
+  },
+          });        
+        </script>
+         <%- include('partials/scripts') %>
+
+        <script src="/js/admin.js"></script>
+     
+  </body>
+</html>
