@@ -38,6 +38,7 @@ mongoose.set("strictQuery", false);
 // mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
 //   useUnifiedTopology: true,
 // });
+
 mongoose.connect(
   "mongodb+srv://Admin-Nwalo:nobicious97@theleadimpactinitiative.y4osptq.mongodb.net/?retryWrites=true&w=majority",
   {
