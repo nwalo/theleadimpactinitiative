@@ -21,71 +21,76 @@
         <div class="projects-grid">
           <div class="container">
             <div class="row">
+              
               <div class="col-md-4 col-sm-6">
-                <!--campaign box start-->
                 <div class="ser-box">
                   <div class="ser-thumb">
-                    <a href="/projects/clean_up_exercise_at_the_ui"><i class="fas fa-link"></i></a>
+                    <a href="/projects/pro/clean_up_exercise_at_the_ui"><i class="fas fa-link"></i></a>
                     <img src="/images/projects/clean-up.png" alt="" />
                   </div>
                   <div class="ser-txt">
-                    <h6><a href="/projects/clean_up_exercise_at_the_ui">Clean-up Exercise At The University Of Ibadan</a></h6>
-                    <span class="aicon"
-                      ><i class="fas fa-arrow-right"></i
-                    ></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <h6><a href="/projects/pro/clean_up_exercise_at_the_ui">Clean-up Exercise At The University Of Ibadan</a></h6>
+                      <span class="aicon" style="position: relative; top: 0;"
+                        ><i class="fas fa-arrow-right"></i
+                      ></span>
+                    </div>
                   </div>
                 </div>
-                <!--campaign box end-->
               </div>
 
               <div class="col-md-4 col-sm-6">
-                <!--campaign box start--> 
                 <div class="ser-box">
                   <div class="ser-thumb">
-                    <a href="/projects/climate_change_is_real"><i class="fas fa-link"></i></a>
+                    <a href="/projects/pro/climate_change_is_real"><i class="fas fa-link"></i></a>
                     <img src="/images/projects/pg_2_cover.jpeg" alt="" />
                   </div>
                   <div class="ser-txt">
-                    <h6><a href="/projects/climate_change_is_real">Climate Change Is Real... Let's All Take Action</a></h6>
-                    <span class="aicon"
-                      ><i class="fas fa-arrow-right"></i
-                    ></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <h6><a href="/projects/pro/climate_change_is_real">Climate Change Is Real... Let's All Take Action</a></h6>
+                      <span class="aicon" style="position: relative; top: 0;"
+                        ><i class="fas fa-arrow-right"></i
+                      ></span>
+                    </div>
                   </div>
                 </div>
-                <!--campaign box end-->
               </div>
-
+  
               <div class="col-md-4 col-sm-6">
-                <!--campaign box start--> 
                 <div class="ser-box">
                   <div class="ser-thumb">
-                    <a href="/projects/climate_change_is_real_2"><i class="fas fa-link"></i></a>
+                    <a href="/projects/pro/climate_change_is_real_2"><i class="fas fa-link"></i></a>
                     <img src="/images/projects/pg_2_cover.jpeg" alt="" />
                   </div>
                   <div class="ser-txt">
-                    <h6><a href="/projects/climate_change_is_real_2">Climate Change Is Real... (Continuation)</a></h6>
-                    <span class="aicon"
-                      ><i class="fas fa-arrow-right"></i
-                    ></span>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <h6><a href="/projects/pro/climate_change_is_real_2">Climate Change Is Real... (Continuation)</a></h6>
+                      <span class="aicon" style="position: relative; top: 0;"
+                        ><i class="fas fa-arrow-right"></i
+                      ></span>
+                    </div>
                   </div>
                 </div>
-                <!--campaign box end-->
               </div>
 
-             <!-- <div class="col-md-4 col-sm-6">
-                <div class="ser-box">
-                  <div class="ser-thumb">
-                    <a href="#"><i class="fas fa-link"></i></a>
-                    <img src="/images/projects/clean-up.png" alt="" />
-                  </div>
-                  <div class="ser-txt">
-                    <h5><a href="/projects/clean_up_exercise_at_the_ui">Clean-up Exercise At The University Of Ibadan</a></h5>
-                    <span class="aicon"
-                      ><i class="fas fa-arrow-right"></i
-                    ></span>
+              <% projects.forEach((proj)=>{ %>
+                <div class="col-md-4 col-sm-6">                  
+                  <div class="ser-box">
+                    <div class="ser-thumb">
+                      <a href="/projects/<%= proj._id %>"><i class="fas fa-link"></i></a>
+                      <img src="<%= proj.bannerImage%>" alt="" />
+                    </div>
+                    <div class="ser-txt">
+                      <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h6><a href="/projects/<%= proj._id %>"><%= proj.title%></a></h6>
+                        <span class="aicon" style="position: relative; top: 0;"
+                          ><i class="fas fa-arrow-right"></i
+                        ></span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div> -->
+             <% }) %>
                            
               <div class="gt-pagination">
                 <nav>

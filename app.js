@@ -35,15 +35,15 @@ app.use(cors());
 //MONGOBD CONNECTIONS
 
 mongoose.set("strictQuery", false);
-// mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
-//   useUnifiedTopology: true,
-// });
-mongoose.connect(
-  "mongodb+srv://Admin-Nwalo:nobicious97@theleadimpactinitiative.y4osptq.mongodb.net/?retryWrites=true&w=majority",
-  {
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
+  useUnifiedTopology: true,
+});
+// mongoose.connect(
+//   "mongodb+srv://Admin-Nwalo:nobicious97@theleadimpactinitiative.y4osptq.mongodb.net/?retryWrites=true&w=majority",
+//   {
+//     useUnifiedTopology: true,
+//   }
+// );
 
 // SCHEMA DEFINITIONS
 
@@ -78,6 +78,10 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    author: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
@@ -100,6 +104,10 @@ const eventSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    author: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
@@ -119,6 +127,10 @@ const projectSchema = new mongoose.Schema(
       required: true,
     },
     bannerImage: {
+      type: String,
+      required: true,
+    },
+    author: {
       type: String,
       required: true,
     },
@@ -251,6 +263,7 @@ app.post("/admin", upload.single("file"), (req, res) => {
       type: _.lowerCase(req.body.type),
       content: req.body.content,
       bannerImage: req.body.banner,
+      author: req.body.author,
     });
   }
   if (req.body.type === "event") {
@@ -258,7 +271,8 @@ app.post("/admin", upload.single("file"), (req, res) => {
       title: _.capitalize(req.body.title),
       type: _.lowerCase(req.body.type),
       content: req.body.content,
-      // bannerImage: req.body.banner,
+      bannerImage: req.body.banner,
+      author: req.body.author,
     });
   }
   if (req.body.type === "project") {
@@ -267,6 +281,7 @@ app.post("/admin", upload.single("file"), (req, res) => {
       type: _.lowerCase(req.body.type),
       content: req.body.content,
       bannerImage: req.body.banner,
+      author: req.body.author,
     });
   }
 
@@ -383,23 +398,38 @@ app.post("/join", (req, res) => {
   // res.render("join");
 });
 
-app.get("/projects", (req, res) => {
-  res.render("projects");
+app.get("/projects", async (req, res) => {
+  try {
+    let projects = await Project.find({});
+
+    res.render("projects", { projects });
+  } catch (error) {
+    res.redirect("/");
+  }
 });
 
-// app.get("/projects/:id", (req, res) => {
-//   res.render("projects-details");
-// });
+app.get("/projects/:id", async (req, res) => {
+  console.log(req.params.id);
+  try {
+    let project = await Project.findById(req.params.id);
+    let date = moment(project.createdAt).format("DD MMMM, YYYY");
 
-app.get("/projects/clean_up_exercise_at_the_ui", (req, res) => {
-  res.render("projects-details");
+    res.render("projects-details", { project, date });
+  } catch (error) {
+    console.log(error);
+    res.redirect("/");
+  }
 });
 
-app.get("/projects/climate_change_is_real", (req, res) => {
+app.get("/projects/pro/clean_up_exercise_at_the_ui", (req, res) => {
+  res.render("projects-details-1");
+});
+
+app.get("/projects/pro/climate_change_is_real", (req, res) => {
   res.render("projects-details-2");
 });
 
-app.get("/projects/climate_change_is_real_2", (req, res) => {
+app.get("/projects/pro/climate_change_is_real_2", (req, res) => {
   res.render("projects-details-3");
 });
 

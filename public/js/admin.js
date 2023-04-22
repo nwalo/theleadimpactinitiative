@@ -53,6 +53,7 @@ $("#create").on("click", async (e) => {
       banner: await toBase64(bannerImage),
       type: $("#type").val(),
       title: $("#title").val(),
+      author: $("#author").val(),
       content,
     };
 
