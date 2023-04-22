@@ -15,12 +15,7 @@
          <!--Inner Header Start-->
          <section class="wf100 p100 inner-header">
             <div class="container">
-               <h1>Awareness Campaign</h1>
-               <!-- <ul>
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#"> Blogs </a></li>
-                  <li><a href="#">Awareness Campaign to Save & Forest Planting</a></li>
-               </ul> -->
+               <h1>Blog</h1>
             </div>
          </section>
          <!--Inner Header End--> 
@@ -32,17 +27,17 @@
                      <div class="col-lg-9 col-md-8">
                         <!--Blog Single Content Start-->
                         <div class="blog-single-content">
-                           <div class="blog-single-thumb"><img src="/images/blog/bf4.jpg" alt=""></div>
-                           <h3>Awareness Campaign to Save & Planting Forest</h3>
+                           <div class="blog-single-thumb" style="width: 80%; height: 400px; margin: 0 auto 25px;"><img src="<%= blog.bannerImage%>" alt=""></div>
+                           <h3 style="text-transform: capitalize;"><%= blog.title %></h3>
                            <ul class="post-meta">
-                              <li><i class="fas fa-user-circle"></i> John Ashley</li>
-                              <li><i class="fas fa-calendar-alt"></i> 29 September, 2018</li>
+                              <li><i class="fas fa-user-circle"></i> <%= blog.author%></li>
+                              <li><i class="fas fa-calendar-alt"></i> <%= date%></li>
                               <li><i class="fas fa-comments"></i> 134 Comments</li>
-                              <li class="tags"><i class="fas fa-tags"></i> <a href="#">Plant</a> <a href="#">Trees</a> <a href="#">Water</a> <a href="#">Recycling</a></li>
+                              <li class="tags"><i class="fas fa-tags"></i> <a href="#!">Plant</a> <a href="#!">Trees</a> <a href="#!">Water</a> <a href="#!">Recycling</a></li>
                            </ul>
-                           <p> The environment includes; the surface of the earth, natural re­sources, land and water, mountains and plains, fertile lands and deserts, oceans, storms and cy­clones, weather and climatic factors, seasons, etc. It also includes biological conditions such as plants, animals with all their complexities.</p>
-                           <p>We are going to run a solid educational campaign for the orphan children study. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum.</p>
-                           <p>You need to be sure there isn't anything embarrassing hidden in the middle of text. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage. </p>
+                           <p> <%- blog.content%> </p>
+                           
+                           <!-- <p>You need to be sure there isn't anything embarrassing hidden in the middle of text. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage. </p>
                            <blockquote>
                               <p> The inner environment is the society itself. It is the social envi­ronment & endures only so long as the society endures. It consists of the organisations and regula­tions, the traditions and institutions. </p>
                            </blockquote>
@@ -59,137 +54,25 @@
                               <li> <img src="/images/blog/bsmall1.jpg" alt=""> </li>
                               <li> <img src="/images/blog/bsmall2.jpg" alt=""> </li>
                               <li> <img src="/images/blog/bsmall3.jpg" alt=""> </li>
-                           </ul>
+                           </ul> -->
                            <!--Post Tags Start-->
-                           <div class="single-post-tags wf100"> <a href="#">Solar Energy</a> <a href="#"> Plant Ecology </a> <a href="#"> Wildlife </a> <a href="#"> Eco Ideas </a> <a href="#"> Waste Management </a> <a href="#"> Water </a> <a href="#"> Forest Planting </a> <a href="#"> Donation </a> <a href="#"> Wind Energy </a> <a href="#"> Recycling </a> </div>
-                           <!--Post Tags End--> 
-                           <!--Author Box Start-->
-                           <div class="author-box wf100">
-                              <img src="/images/auser.jpg" alt="">
-                              <h5>About Post Author</h5>
-                              <p> Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibe saepe eveniet ut et voluptates repudiandae sint et molestiaerecusanda Itaque earum rerum hic tenetur a sapien delectus, ut aut reiciendis. </p>
-                           </div>
-                           <!--Author Box End--> 
-                           <!--Author Comments Start-->
-                           <div class="post-comments wf100">
-                              <h4>Comments on Post</h4>
-                              <ul class="comments">
-                                 <!--Comment Start-->
-                                 <li class="comment">
-                                    <div class="user-thumb"> <img src="/images/auser.jpg" alt=""></div>
-                                    <div class="comment-txt">
-                                       <h6> Mason Gray </h6>
-                                       <p> Personally I think a combination of all these methods is most effective, but in today’s post I will be focusing specifically on how to use and style WordPress’ built-in sticky post feature and highlighting it’s best use case based on my own experience. </p>
-                                       <ul class="comment-time">
-                                          <li>Posted: 09 July, 2018 at 2:37 pm</li>
-                                          <li> <a href="#"><i class="fas fa-reply"></i> Reply</a> </li>
-                                       </ul>
-                                    </div>
-                                    <ul class="children">
-                                       <!--Comment Start-->
-                                       <li class="comment">
-                                          <div class="user-thumb"> <img src="/images/auser.jpg" alt=""></div>
-                                          <div class="comment-txt">
-                                             <h6> Johny Elite </h6>
-                                             <p> Personally I think a combination of all these methods is most effective, but in today’s post I will be focusing specifically on how to use and style WordPress’ built-in sticky post feature and highlighting it’s best use case based on my own experience. </p>
-                                             <ul class="comment-time">
-                                                <li>Posted: 09 July, 2018 at 2:37 pm</li>
-                                                <li> <a href="#"><i class="fas fa-reply"></i> Reply</a> </li>
-                                             </ul>
-                                          </div>
-                                       </li>
-                                       <!--Comment End--> 
-                                       <!--Comment Start-->
-                                       <li class="comment">
-                                          <div class="user-thumb"> <img src="/images/auser.jpg" alt=""></div>
-                                          <div class="comment-txt">
-                                             <h6> Rog Kelly </h6>
-                                             <p> Personally I think a combination of all these methods is most effective, but in today’s post I will be focusing specifically on how to use and style WordPress’ built-in sticky post feature and highlighting it’s best use case based on my own experience. </p>
-                                             <ul class="comment-time">
-                                                <li>Posted: 09 July, 2018 at 2:37 pm</li>
-                                                <li> <a href="#"><i class="fas fa-reply"></i> Reply</a> </li>
-                                             </ul>
-                                          </div>
-                                       </li>
-                                       <!--Comment End-->
-                                    </ul>
-                                 </li>
-                                 <!--Comment End--> 
-                                 <!--Comment Start-->
-                                 <li class="comment">
-                                    <div class="user-thumb"> <img src="/images/auser.jpg" alt=""></div>
-                                    <div class="comment-txt">
-                                       <h6> Harry Butler </h6>
-                                       <p> Personally I think a combination of all these methods is most effective, but in today’s post I will be focusing specifically on how to use and style WordPress’ built-in sticky post feature and highlighting it’s best use case based on my own experience. </p>
-                                       <ul class="comment-time">
-                                          <li>Posted: 09 July, 2018 at 2:37 pm</li>
-                                          <li> <a href="#"><i class="fas fa-reply"></i> Reply</a> </li>
-                                       </ul>
-                                    </div>
-                                 </li>
-                                 <!--Comment End-->
-                              </ul>
-                           </div>
-                           <!--Author Comments End--> 
-                           <!--Related Posts Start-->
+                           <div class="single-post-tags wf100"> <a href="#!">Solar Energy</a> <a href="#!"> Plant Ecology </a> <a href="#!"> Wildlife </a> <a href="#!"> Eco Ideas </a> <a href="#!"> Waste Management </a> <a href="#!"> Water </a> <a href="#!"> Forest Planting </a> <a href="#!"> Donation </a> <a href="#!"> Wind Energy </a> <a href="#!"> Recycling </a> </div>
+                          
                            <div class="wf100 related-posts">
                               <h4>Related Posts</h4>
                               <ul>
                                  <li>
                                     <div class="rp-box">
-                                       <h6> <a href="#">Social innovation of nonprofit, think tank, outcome to donate</a> </h6>
+                                       <h6> <a href="#!">Social innovation of nonprofit, think tank, outcome to donate</a> </h6>
                                        <ul class="post-meta">
-                                          <li> <a href="#"><i class="fas fa-calendar-alt"></i> 29 September, 2018</a> </li>
-                                          <li> <a href="#"><i class="fas fa-comments"></i> 134 Comments </a> </li>
-                                          <li> <a href="#"><i class="fas fa-share-alt"></i> 206 Share </a> </li>
-                                       </ul>
-                                    </div>
-                                 </li>
-                                 <li>
-                                    <div class="rp-box">
-                                       <h6> <a href="#">Social innovation of nonprofit, think tank, outcome to donate</a> </h6>
-                                       <ul class="post-meta">
-                                          <li> <a href="#"><i class="fas fa-calendar-alt"></i> 29 September, 2018</a> </li>
-                                          <li> <a href="#"><i class="fas fa-comments"></i> 134 Comments </a> </li>
-                                          <li> <a href="#"><i class="fas fa-share-alt"></i> 206 Share </a> </li>
-                                       </ul>
-                                    </div>
-                                 </li>
-                                 <li>
-                                    <div class="rp-box">
-                                       <h6> <a href="#">Social innovation of nonprofit, think tank, outcome to donate</a> </h6>
-                                       <ul class="post-meta">
-                                          <li> <a href="#"><i class="fas fa-calendar-alt"></i> 29 September, 2018</a> </li>
-                                          <li> <a href="#"><i class="fas fa-comments"></i> 134 Comments </a> </li>
-                                          <li> <a href="#"><i class="fas fa-share-alt"></i> 206 Share </a> </li>
+                                          <li> <a href="#!"><i class="fas fa-calendar-alt"></i> 29 September, 2018</a> </li>
+                                          <li> <a href="#!"><i class="fas fa-comments"></i> 134 Comments </a> </li>
+                                          <li> <a href="#!"><i class="fas fa-share-alt"></i> 206 Share </a> </li>
                                        </ul>
                                     </div>
                                  </li>
                               </ul>
                            </div>
-                           <!--Related Posts End--> 
-                           <!--Leave a Comment Start-->
-                           <div class="wf100 comment-form">
-                              <h4>Leave a Comment</h4>
-                              <ul>
-                                 <li class="w3">
-                                    <input type="text" class="form-control" placeholder="Full Name">
-                                 </li>
-                                 <li class="w3">
-                                    <input type="text" class="form-control" placeholder="Email">
-                                 </li>
-                                 <li class="w3 np">
-                                    <input type="text" class="form-control" placeholder="Subject">
-                                 </li>
-                                 <li class="full">
-                                    <textarea class="form-control" placeholder="Write Comments"></textarea>
-                                 </li>
-                                 <li class="full">
-                                    <button class="post-btn">Post Your Comment</button>
-                                 </li>
-                              </ul>
-                           </div>
-                           <!--Leave a Comment End--> 
                         </div>
                         <!--Blog Single Content End--> 
                      </div>
@@ -206,131 +89,50 @@
                                  </form>
                               </div>
                            </div>
-                           <!--Widget End--> 
-                           <!--Widget Start-->
-                           <div class="side-widget text-widget">
-                              <h5>Text Widget</h5>
-                              <p> We are Ecova: eco & environmental community. We need your support and help to Stop Globar Warning. Few generations ago it to seemed like world’s resources were infinite, and the people needed only to access them to create business, Lorem ipsum dolor it amet consect adipiscing. </p>
-                           </div>
-                           <!--Widget End--> 
-                           <!--Widget Start-->
                            <div class="side-widget">
                               <h5>News & Articles</h5>
                               <ul class="lastest-products">
-                                 <li> <img src="/images/flp1.jpg" alt=""> <strong><a href="#">How you can keep alive wild animals for...</a></strong> <span class="pdate"><i class="fas fa-calendar-alt"></i> 29 September, 2018</span> </li>
-                                 <li> <img src="/images/flp2.jpg" alt=""> <strong><a href="#">Eliminate your plastic bottle pollution</a></strong> <span class="pdate"><i class="fas fa-calendar-alt"></i> 29 September, 2018</span> </li>
-                                 <li> <img src="/images/flp3.jpg" alt=""> <strong><a href="#">How you can keep alive wild animals for...</a></strong> <span class="pdate"><i class="fas fa-calendar-alt"></i> 29 September, 2018</span> </li>
+                                 <%blogs.forEach((blg)=>{ %>
+                                    <li style="display: flex;"> 
+                                       <div style="background: url('<%= blg.bannerImage%>'); background-size: cover; background-position: center; width: 120px; height: 65px; margin-right: 4px;"></div>
+                                       <div>
+                                          <strong style="text-transform: capitalize;"><a href="/blog/<%= blg._id%>"><%= blg.title %></a></strong> 
+                                          <span class="pdate"><i class="fas fa-calendar-alt"></i> <%= blg.type%></span>
+                                       </div>
+                                     </li>
+                                 <%  }) %>
                               </ul>
                            </div>
-                           <!--Widget Start--> 
-                           <!--Widget Start-->
-                           <div class="side-widget project-list-widget">
-                              <h5>Current Projects</h5>
-                              <ul>
-                                 <li><a href="#">Waste Management</a></li>
-                                 <li><a href="#">Solar Energy</a></li>
-                                 <li><a href="#">Eco Ideas</a></li>
-                                 <li><a href="#">Recycling Materials</a></li>
-                                 <li><a href="#">Plant Ecology</a></li>
-                                 <li><a href="#">Saving Wildlife</a></li>
-                                 <li><a href="#">Water Resources</a></li>
-                                 <li><a href="#">Forest & Tree Planting</a></li>
-                                 <li><a href="#">Wing Energy</a></li>
-                              </ul>
-                           </div>
-                           <!--Widget End--> 
-                           <!--Widget Start-->
                            <div class="side-widget">
                               <h5>Tags</h5>
-                              <div class="single-post-tags"> <a href="#">Solar Energy</a> <a href="#"> Plant Ecology </a> <a href="#"> Wildlife </a> <a href="#"> Eco Ideas </a> <a href="#"> Waste Management </a> <a href="#"> Water </a> <a href="#"> Forest Planting </a> <a href="#"> Donation </a> <a href="#"> Wind Energy </a> <a href="#"> Recycling </a> </div>
+                              <div class="single-post-tags"> <a href="#!">Solar Energy</a> <a href="#!"> Plant Ecology </a> <a href="#!"> Wildlife </a> <a href="#!"> Eco Ideas </a> <a href="#!"> Waste Management </a> <a href="#!"> Water </a> <a href="#!"> Forest Planting </a> <a href="#!"> Donation </a> <a href="#!"> Wind Energy </a> <a href="#!"> Recycling </a> </div>
                            </div>
                            <!--Widget End--> 
                            <!--Widget Start-->
-                           <div class="side-widget">
-                              <h5>Recent Work</h5>
-                              <div id="side-slider" class="owl-carousel owl-theme">
-                                 <!--Item Start-->
-                                 <div class="item">
-                                    <div class="pro-box">
-                                       <img src="/images/current-pro5.jpg" alt="">
-                                       <h5>Forest &amp; Tree Planting</h5>
-                                       <div class="pro-hover">
-                                          <h6>Forest &amp; Tree Planting</h6>
-                                          <p>We are working over 20 years on Waste Management &amp; Material Recycling Projects.</p>
-                                          <a href="#">Read More</a> 
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!--Item End--> 
-                                 <!--Item Start-->
-                                 <div class="item">
-                                    <div class="pro-box">
-                                       <img src="/images/current-pro2.jpg" alt="">
-                                       <h5>Forest &amp; Tree Planting</h5>
-                                       <div class="pro-hover">
-                                          <h6>Forest &amp; Tree Planting</h6>
-                                          <p>We are working over 20 years on Waste Management &amp; Material Recycling Projects.</p>
-                                          <a href="#">Read More</a> 
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!--Item End--> 
-                                 <!--Item Start-->
-                                 <div class="item">
-                                    <div class="pro-box">
-                                       <img src="/images/current-pro1.jpg" alt="">
-                                       <h5>Forest &amp; Tree Planting</h5>
-                                       <div class="pro-hover">
-                                          <h6>Forest &amp; Tree Planting</h6>
-                                          <p>We are working over 20 years on Waste Management &amp; Material Recycling Projects.</p>
-                                          <a href="#">Read More</a> 
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <!--Item End--> 
-                              </div>
-                           </div>
-                           <!--Widget End--> 
-                           <!--Widget Start-->
-                           <div class="side-widget archives">
-                              <h5>Archives</h5>
-                              <ul>
-                                 <li><a href="#"> November 2018</a></li>
-                                 <li><a href="#"> October 2018</a></li>
-                                 <li><a href="#"> September 2018</a></li>
-                                 <li><a href="#"> August 2018</a></li>
-                                 <li><a href="#"> July 2018</a></li>
-                                 <li><a href="#"> June 2018</a></li>
-                                 <li><a href="#"> May 2018</a></li>
-                                 <li><a href="#"> April 2018</a></li>
-                                 <li><a href="#"> March 2018</a></li>
-                                 <li><a href="#"> February 2018</a></li>
-                                 <li><a href="#"> January 2018</a></li>
-                                 <li><a href="#"> December 2017</a></li>
-                              </ul>
-                           </div>
-                           <!--Widget End--> 
-                           <!--Widget Start-->
+                           
                            <div class="side-widget side-volunteer-form">
                               <h5>Become a Volunteer</h5>
-                              <ul>
-                                 <li>
-                                    <input type="text" class="form-control" placeholder="Your Name" aria-label="Your Name">
-                                 </li>
-                                 <li>
-                                    <input type="text" class="form-control" placeholder="Email Address" aria-label="Email Address">
-                                 </li>
-                                 <li>
-                                    <input type="text" class="form-control" placeholder="Contact" aria-label="Contact">
-                                 </li>
-                                 <li>
-                                    <input type="submit" class="fsubmit" value="Signup to Join us Now">
-                                 </li>
-                              </ul>
+                              <form  id="join-us-form" >
+                                 <ul>
+                                    <li>
+                                       <input type="text" class="form-control" placeholder="Your Name" aria-label="Your Name" id="fullName" name="fullname" required>
+                                    </li>
+                                    <li>
+                                       <input type="text" class="form-control" placeholder="Email Address" aria-label="Email Address" name="email" id="email" required>
+                                    </li>
+                                    <li>
+                                       <input type="text" class="form-control" placeholder="Contact" aria-label="Contact" name="phone" id="phone" required>
+                                    </li>
+                                    <li>
+                                       <input type="submit" class="fsubmit" value="Signup to Join us Now">
+                                    </li>
+                                 </ul>
+                              </form>
+                              <p id="msg" class="mt-4 mx-2" style="text-align: center;"> </p>
                            </div>
                            <!--Widget End--> 
                            <!--Widget Start-->
-                           <div class="side-widget">
+                           <!-- <div class="side-widget">
                               <div class="donation-amount">
                                  <h5>Make a Donation</h5>
                                  <form>
@@ -382,7 +184,7 @@
                                     </ul>
                                  </form>
                               </div>
-                           </div>
+                           </div> -->
                            <!--Widget End-->
                         </div>
                      </div>

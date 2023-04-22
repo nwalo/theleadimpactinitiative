@@ -304,13 +304,33 @@ app.post("/admin", upload.single("file"), (req, res) => {
   });
 });
 
-app.get("/blog", (req, res) => {
-  // res.render("blog");
-  res.redirect("/coming-soon");
+app.get("/blog", async (req, res) => {
+  try {
+    let blogs = (await Blog.find({})).reverse();
+    let date = moment(blogs.createdAt).format("DD MMMM, YYYY");
+    res.render("blog", { blogs, date });
+  } catch (error) {
+    console.log(error);
+    res.redirect("/");
+  }
 });
 
-app.get("/blog/:id", (req, res) => {
-  res.render("blog-details");
+app.get("/blog/:id", async (req, res) => {
+  try {
+    let blog = await Blog.findById(req.params.id);
+    let blogs = await Blog.find({});
+    let newBlog = blogs.map((i) => {
+      i.title = i.title.slice(0, 20);
+      i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+      return i;
+    });
+
+    let date = moment(blog.createdAt).format("DD MMMM, YYYY");
+    res.render("blog-details", { blog, blogs: newBlog.slice(0, 3), date });
+  } catch (error) {
+    console.log(error);
+    res.redirect("/");
+  }
 });
 
 app.get("/coming-soon", (req, res) => {
@@ -395,7 +415,6 @@ app.post("/join", (req, res) => {
       }
     }
   });
-  // res.render("join");
 });
 
 app.get("/projects", async (req, res) => {
@@ -409,14 +428,12 @@ app.get("/projects", async (req, res) => {
 });
 
 app.get("/projects/:id", async (req, res) => {
-  console.log(req.params.id);
   try {
     let project = await Project.findById(req.params.id);
     let date = moment(project.createdAt).format("DD MMMM, YYYY");
 
     res.render("projects-details", { project, date });
   } catch (error) {
-    console.log(error);
     res.redirect("/");
   }
 });
