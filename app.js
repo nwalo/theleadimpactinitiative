@@ -35,16 +35,16 @@ app.use(cors());
 //MONGOBD CONNECTIONS
 
 mongoose.set("strictQuery", false);
-// mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
-//   useUnifiedTopology: true,
-// });
+mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
+  useUnifiedTopology: true,
+});
 
-mongoose.connect(
-  "mongodb+srv://Admin-Nwalo:nobicious97@theleadimpactinitiative.y4osptq.mongodb.net/?retryWrites=true&w=majority",
-  {
-    useUnifiedTopology: true,
-  }
-);
+// mongoose.connect(
+//   "mongodb+srv://Admin-Nwalo:nobicious97@theleadimpactinitiative.y4osptq.mongodb.net/?retryWrites=true&w=majority",
+//   {
+//     useUnifiedTopology: true,
+//   }
+// );
 
 // SCHEMA DEFINITIONS
 
@@ -491,44 +491,56 @@ app.get("/logout", function (req, res) {
 });
 
 app.post("/register", function (req, res) {
-  User.register(
-    {
-      username: req.body.username,
-    },
-    req.body.password,
-    function (err) {
-      if (err) {
-        res.render("my-account", {
-          errorMsg:
-            "Error! User registration failed - Email address already exist.",
-          page: "register",
-        });
-      } else {
-        passport.authenticate("local")(req, res, function () {
-          User.updateOne(
-            {
-              _id: req.user.id,
-            },
-            {
-              fullName: _.capitalize(req.body.fullName),
-              nick: _.capitalize(req.body.nick),
-              phone: req.body.phone,
-            },
-            function (err) {
-              if (!err) {
-                res.render("admin");
-              } else {
-                res.render("my-account", {
-                  errorMsg: "Error ! User registration failed.",
-                  page: "register",
-                });
+  // return console.log(req.isAuthenticated(), req);
+  if (
+    req.isAuthenticated() &&
+    (req.user.username === "Millerstephen314@gmail.com" ||
+      req.user.username === "lawrenceakpoterai@gmail.com")
+  ) {
+    User.register(
+      {
+        username: req.body.username,
+      },
+      req.body.password,
+      function (err) {
+        if (err) {
+          res.render("my-account", {
+            errorMsg:
+              "Error! User registration failed - Email address already exist.",
+            page: "register",
+          });
+        } else {
+          passport.authenticate("local")(req, res, function () {
+            User.updateOne(
+              {
+                _id: req.user.id,
+              },
+              {
+                fullName: _.capitalize(req.body.fullName),
+                nick: _.capitalize(req.body.nick),
+                phone: req.body.phone,
+              },
+              function (err) {
+                if (!err) {
+                  res.render("admin");
+                } else {
+                  res.render("my-account", {
+                    errorMsg: "Error ! User registration failed.",
+                    page: "register",
+                  });
+                }
               }
-            }
-          );
-        });
+            );
+          });
+        }
       }
-    }
-  );
+    );
+  } else {
+    res.render("my-account", {
+      errorMsg: "Authorization failed... Contact the admin.",
+      page: "register",
+    });
+  }
 });
 
 app.get("*", (req, res) => {
