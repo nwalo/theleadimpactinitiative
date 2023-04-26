@@ -307,9 +307,30 @@ app.post("/admin", upload.single("file"), (req, res) => {
 
 app.get("/blog", async (req, res) => {
   try {
-    let blogs = (await Blog.find({})).reverse();
-    let date = moment(blogs.createdAt).format("DD MMMM, YYYY");
-    res.render("blog", { blogs, date });
+    const blog1 = (await Blog.find({})).reverse();
+    const blog2 = (await Blog.find({})).reverse();
+
+    const mainBlogs = [];
+    const recentBlogs = [];
+
+    blog1.forEach((i) => {
+      i.content = i.content.slice(0, 400);
+      i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+
+      mainBlogs.push(i);
+    });
+
+    blog2.forEach((i) => {
+      i.title = i.title.slice(0, 30);
+      i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+      recentBlogs.push(i);
+    });
+
+    res.render("blog", {
+      mainBlogs,
+      date: "",
+      recentBlogs: recentBlogs.slice(0, 3),
+    });
   } catch (error) {
     console.log(error);
     res.redirect("/");
@@ -321,7 +342,7 @@ app.get("/blog/:id", async (req, res) => {
     let blog = await Blog.findById(req.params.id);
     let blogs = await Blog.find({});
     let newBlog = blogs.map((i) => {
-      i.title = i.title.slice(0, 20);
+      i.title = i.title.slice(0, 30);
       i.type = moment(i.createdAt).format("DD MMMM, YYYY");
       return i;
     });

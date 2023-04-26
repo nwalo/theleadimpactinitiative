@@ -1,10 +1,6 @@
 <!doctype html>
 <html lang="en">
-   
-
 <head>
-   
-      <title>ECO HTML</title>
       <!-- CSS FILES START -->
     <%- include('partials/head.ejs') %>
     <!-- CSS FILES End -->
@@ -96,7 +92,7 @@
                                     <li style="display: flex;"> 
                                        <div style="background: url('<%= blg.bannerImage%>'); background-size: cover; background-position: center; width: 120px; height: 65px; margin-right: 4px;"></div>
                                        <div>
-                                          <strong style="text-transform: capitalize;"><a href="/blog/<%= blg._id%>"><%= blg.title %></a></strong> 
+                                          <strong style="text-transform: capitalize;"><a href="/blog/<%= blg._id%>"><%= blg.title %> ...</a></strong> 
                                           <span class="pdate"><i class="fas fa-calendar-alt"></i> <%= blg.type%></span>
                                        </div>
                                      </li>

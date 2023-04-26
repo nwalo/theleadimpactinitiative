@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>ECO HTML</title>
 <!-- CSS FILES START -->
 <%- include('partials/head.ejs') %>
 <!-- CSS FILES End -->
@@ -24,7 +23,7 @@
           <!--Blog Posts Start-->
           <div class="blog-posts"> 
             <!--Blog Post Start-->
-            <% blogs.forEach((blog)=>{ %>
+            <% mainBlogs.forEach((blog)=>{ %>
               <div class="blog-post">
                 <div class="blog-thumb" style="width: 90%;height: 400px; background: url('<%= blog.bannerImage%>'); background-size: cover; background-position: center;"> <a href="/blog/<%= blog._id%>"><i class="fas fa-link"></i></a>
                   <!-- <img src="<%= blog.bannerImage%>" alt=""> -->
@@ -33,11 +32,11 @@
                   <h3><a href="/blog/<%= blog._id%>" style="text-transform: capitalize;"><%= blog.title %></a></h3>
                   <ul class="post-meta">
                     <li> <a href="#!"><i class="fas fa-user-circle"></i> <%= blog.author %></a> </li>
-                    <li> <a href="#!"><i class="fas fa-calendar-alt"></i> <%= date%></a> </li>
+                    <li> <a href="#!"><i class="fas fa-calendar-alt"></i> <%= blog.type%></a> </li>
                     <li> <a href="#!"><i class="fas fa-comments"></i> 134 Comments </a> </li>
                     <li class="post-tags"><i class="fas fa-tags"></i> <a href="#!">Plant</a>, <a href="#!">Trees</a>, <a href="#!">Water</a>, <a href="#!">Recycling</a> </li>
                   </ul>
-                  <p> The environment includes; the surface of the earth, natural re­sources, land and water, mountains and plains, fertile lands and deserts, oceans, storms and cy­clones, weather and climatic factors, seasons, etc. It also includes biological conditions such as plants, animals with all their complexities. </p>
+                  <p> <%- blog.content%>... </p>
                   <a href="/blog/<%= blog._id%>" class="read-post">Read Post</a> </div>
               </div>
            <% }) %>
@@ -111,10 +110,16 @@
             <div class="side-widget">
               <h5>News &amp; Articles</h5>
               <ul class="lastest-products">
-                <li> <img src="images/flp1.jpg" alt=""> <strong><a href="#!">How you can keep alive wild animals for...</a></strong> <span class="pdate"><i class="fas fa-calendar-alt"></i> 29 September, 2018</span> </li>
-                <li> <img src="images/flp2.jpg" alt=""> <strong><a href="#!">Eliminate your plastic bottle pollution</a></strong> <span class="pdate"><i class="fas fa-calendar-alt"></i> 29 September, 2018</span> </li>
-                <li> <img src="images/flp3.jpg" alt=""> <strong><a href="#!">How you can keep alive wild animals for...</a></strong> <span class="pdate"><i class="fas fa-calendar-alt"></i> 29 September, 2018</span> </li>
-              </ul>
+                <%recentBlogs.forEach((blg)=>{ %>
+                   <li style="display: flex;"> 
+                      <div style="background: url('<%= blg.bannerImage%>'); background-size: cover; background-position: center; width: 120px; height: 65px; margin-right: 4px;"></div>
+                      <div>
+                         <strong style="text-transform: capitalize;"><a href="/blog/<%= blg._id%>"><%= blg.title %> ...</a></strong> 
+                         <span class="pdate"><i class="fas fa-calendar-alt"></i> <%= blg.type%></span>
+                      </div>
+                    </li>
+                <%  }) %>
+             </ul>
             </div>
             <!--Widget Start--> 
             <!--Widget Start-->
