@@ -14,6 +14,7 @@ const cors = require("cors");
 const axios = require("axios");
 const sgMail = require("@sendgrid/mail");
 const multer = require("multer");
+const { title } = require("process");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -79,6 +80,10 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    tags: {
+      type: [],
+      required: true,
+    },
     author: {
       type: String,
       required: true,
@@ -103,6 +108,10 @@ const eventSchema = new mongoose.Schema(
     },
     bannerImage: {
       type: String,
+      required: true,
+    },
+    tags: {
+      type: [],
       required: true,
     },
     author: {
@@ -131,6 +140,10 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    tags: {
+      type: [],
+      required: true,
+    },
     author: {
       type: String,
       required: true,
@@ -138,6 +151,16 @@ const projectSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+const tagSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+});
 
 // MONGODB PLUGINS
 
@@ -151,6 +174,7 @@ const Volunteer = mongoose.model("Volunteer", volunteerSchema);
 const Blog = mongoose.model("Blog", blogSchema);
 const Project = mongoose.model("Project", projectSchema);
 const Event = mongoose.model("Event", eventSchema);
+const Tag = mongoose.model("Tag", tagSchema);
 
 passport.use(User.createStrategy());
 
@@ -223,8 +247,22 @@ const upload = multer({ storage });
 
 // API ENDPOINTS / ROUTES
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  try {
+    let news = (await Blog.find({})).reverse();
+    let posts = (singlPost = []);
+    news.slice(0, 3).forEach((i) => {
+      i.title = i.title.length > 30 ? `${i.title.slice(0, 30)} ...` : i.title;
+      i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+      i.content = i.content.slice(0, 40);
+      posts.push(i);
+    });
+
+    res.render("index", { posts, singlPost });
+  } catch (error) {
+    console.log(error);
+    res.redirect("*");
+  }
 });
 
 app.get("/about", (req, res) => {
@@ -264,7 +302,8 @@ app.post("/admin", upload.single("file"), (req, res) => {
       type: _.lowerCase(req.body.type),
       content: req.body.content,
       bannerImage: req.body.banner,
-      author: req.body.author,
+      tags: req.body.tags,
+      author: _.lowerCase(req.body.author),
     });
   }
   if (req.body.type === "event") {
@@ -273,7 +312,8 @@ app.post("/admin", upload.single("file"), (req, res) => {
       type: _.lowerCase(req.body.type),
       content: req.body.content,
       bannerImage: req.body.banner,
-      author: req.body.author,
+      tags: req.body.tags,
+      author: _.lowerCase(req.body.author),
     });
   }
   if (req.body.type === "project") {
@@ -282,9 +322,28 @@ app.post("/admin", upload.single("file"), (req, res) => {
       type: _.lowerCase(req.body.type),
       content: req.body.content,
       bannerImage: req.body.banner,
-      author: req.body.author,
+      tags: req.body.tags,
+      author: _.lowerCase(req.body.author),
     });
   }
+
+  const tags = req.body.tags;
+
+  tags.forEach((tag) => {
+    Tag.findOne({ title: tag }, (err, found) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (!found) {
+          const newTag = new Tag({
+            title: tag,
+            type: _.lowerCase(req.body.type),
+          });
+          newTag.save();
+        }
+      }
+    });
+  });
 
   post.save((err) => {
     if (err) {
@@ -309,14 +368,12 @@ app.get("/blog", async (req, res) => {
   try {
     const blog1 = (await Blog.find({})).reverse();
     const blog2 = (await Blog.find({})).reverse();
-
     const mainBlogs = [];
     const recentBlogs = [];
 
     blog1.forEach((i) => {
       i.content = i.content.slice(0, 400);
       i.type = moment(i.createdAt).format("DD MMMM, YYYY");
-
       mainBlogs.push(i);
     });
 
@@ -328,7 +385,6 @@ app.get("/blog", async (req, res) => {
 
     res.render("blog", {
       mainBlogs,
-      date: "",
       recentBlogs: recentBlogs.slice(0, 3),
     });
   } catch (error) {
@@ -441,10 +497,18 @@ app.post("/join", (req, res) => {
 
 app.get("/projects", async (req, res) => {
   try {
-    let projects = await Project.find({});
+    let proj1 = (await Project.find({})).reverse();
+    let mainProjects = [];
+    proj1.forEach((i) => {
+      i.title = i?.title.length > 50 ? `${i.title.slice(0, 50)} ...` : i?.title;
+      i.content = i.content.slice(0, 400);
+      i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+      mainProjects.push(i);
+    });
 
-    res.render("projects", { projects });
+    res.render("projects", { projects: mainProjects });
   } catch (error) {
+    console.log(error);
     res.redirect("/");
   }
 });
@@ -454,7 +518,16 @@ app.get("/projects/:id", async (req, res) => {
     let project = await Project.findById(req.params.id);
     let date = moment(project.createdAt).format("DD MMMM, YYYY");
 
-    res.render("projects-details", { project, date });
+    let proj1 = (await Project.find({})).reverse().slice(0, 3);
+    let recentProjects = [];
+    proj1.forEach((i) => {
+      i.title = i?.title.length > 50 ? `${i.title.slice(0, 50)} ...` : i?.title;
+      i.content = i.content.slice(0, 400);
+      i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+      recentProjects.push(i);
+    });
+
+    res.render("projects-details", { project, date, recentProjects });
   } catch (error) {
     res.redirect("/");
   }
@@ -462,14 +535,6 @@ app.get("/projects/:id", async (req, res) => {
 
 app.get("/projects/pro/clean_up_exercise_at_the_ui", (req, res) => {
   res.render("projects-details-1");
-});
-
-app.get("/projects/pro/climate_change_is_real", (req, res) => {
-  res.render("projects-details-2");
-});
-
-app.get("/projects/pro/climate_change_is_real_2", (req, res) => {
-  res.render("projects-details-3");
 });
 
 app.post("/login", function (req, res) {

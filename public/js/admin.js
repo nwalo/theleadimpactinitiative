@@ -46,6 +46,15 @@ $("#preview").on("click", async (e) => {
 $("#create").on("click", async (e) => {
   const bannerImage = $("#banner_image")[0].files[0];
   const content = tinyMCE.get("content").getContent();
+  const tags = [];
+  $("#tags")
+    .val()
+    .split(",")
+    .map((i) => {
+      if (i.length > 0 && !tags.includes(i)) {
+        tags.push(i.toLowerCase().trim());
+      }
+    });
 
   e.preventDefault();
   try {
@@ -55,6 +64,7 @@ $("#create").on("click", async (e) => {
       title: $("#title").val(),
       author: $("#author").val(),
       content,
+      tags,
     };
 
     let result = await axios.post("/admin", data);

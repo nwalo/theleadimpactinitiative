@@ -37,7 +37,7 @@
                   </div>
                 </div>
               </div>
-
+<!--  
               <div class="col-md-4 col-sm-6">
                 <div class="ser-box">
                   <div class="ser-thumb">
@@ -70,14 +70,14 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <% projects.forEach((proj)=>{ %>
                 <div class="col-md-4 col-sm-6">                  
                   <div class="ser-box">
-                    <div class="ser-thumb">
+                    <div class="ser-thumb" >
                       <a href="/projects/<%= proj._id %>"><i class="fas fa-link"></i></a>
-                      <img src="<%= proj.bannerImage%>" alt="" />
+                      <img src="<%= proj.bannerImage%>" style="height: 275px;" alt="" />
                     </div>
                     <div class="ser-txt">
                       <div style="display: flex; justify-content: space-between; align-items: center;">
