@@ -449,9 +449,11 @@ app.get("/events", async (req, res) => {
     mainEvent.push(i);
   });
 
-  res.render("events", { events: mainEvent });
-
-  // res.redirect("/coming-soon");
+  if (mainEvent.length > 0) {
+    res.render("events", { events: mainEvent });
+  } else {
+    res.redirect("/coming-soon");
+  }
 });
 
 app.get("/events/:id", async (req, res) => {
