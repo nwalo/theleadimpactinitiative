@@ -35,7 +35,7 @@ app.use(cors());
 
 //MONGOBD CONNECTIONS
 
-// mongoose.set("strictQuery", false);
+mongoose.set("strictQuery", false);
 // mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
 //   useUnifiedTopology: true,
 // });
@@ -444,19 +444,31 @@ app.get("/events", async (req, res) => {
   event1.forEach((i) => {
     i.title = i?.title.length > 50 ? `${i.title.slice(0, 50)} ...` : i?.title;
     i.content =
-      i?.content.length > 200 ? `${i.content.slice(0, 200)} ... ` : i?.content;
+      i?.content.length > 100 ? `${i.content.slice(0, 150)} ... ` : i?.content;
     i.type = moment(i.createdAt).format("DD MMMM, YYYY");
     mainEvent.push(i);
   });
 
+  let blog1 = (await Blog.find({})).reverse().slice(0, 3);
+
+  let recentBlogs = [];
+  blog1.forEach((i) => {
+    i.title = i?.title.length > 50 ? `${i.title.slice(0, 50)} ...` : i?.title;
+    i.content = i.content.slice(0, 400);
+    i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+    recentBlogs.push(i);
+  });
+
   if (mainEvent.length > 0) {
-    res.render("events", { events: mainEvent });
+    res.render("events", { events: mainEvent, recentBlogs });
   } else {
     res.redirect("/coming-soon");
   }
 });
 
 app.get("/events/:id", async (req, res) => {
+  console.log(req.params);
+  console.log(req.query);
   try {
     let event = await Event.findById(req.params.id);
     let date = moment(event.createdAt).format("DD MMMM, YYYY");

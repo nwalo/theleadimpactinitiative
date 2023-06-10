@@ -4,6 +4,17 @@
     <!-- CSS FILES START -->
     <%- include('partials/head.ejs') %>
     <!-- CSS FILES End -->
+    <style>
+      .descr{
+        width: 75% !important
+      }
+
+      @media (max-width: 500px) {
+        .descr{
+        width: 100% !important
+      }
+      }
+    </style>
   </head>
   <body>
     <%- include('partials/navigation.ejs') %>
@@ -22,8 +33,10 @@
             <div class="row">
               <div class="col-lg-9 col-md-8">
                 <!--Event Box Start-->
-               <% events.forEach(event=>{ %>
-                <div class="event-list-box"> 
+                
+                <!--Event Box Start-->
+                <% events.forEach(event=>{ %>
+                <div class="event-list-box">
                   <div class="event-thumb">
                     <a href="/events/<%=event._id %>"><i class="fas fa-link"></i></a>
                     <img src="<%= event.bannerImage%>" style="height: 166px;" alt="" />
@@ -33,20 +46,17 @@
                     <li><strong>Time:</strong> 09:30 am - 03:00 pm</li>
                     <li><strong>Venue:</strong> 150 / G iii, Newyork, USA</li>
                   </ul> -->
-                  <div class="event-txt" style="width: 70%;">
+                  <div class="event-txt descr">
                     <h4>
-                      <a href="/events/<%=event._id %>"
-                        ><%= event.title %></a
-                      >
+                      <a href="/events/<%=event._id %>"><%= event.title %></a >
                     </h4>
-                    <div>
+                    <p>
                       <%- event.content %>
-                    </div>
+                    </p>
                     <a href="/events/<%=event._id %>" class="attbtn">Attend Event</a>
                   </div>
                 </div>
                 <% }) %>
-                
                 <!--Event Box End-->
                 
               </div>
@@ -66,66 +76,29 @@
                       </form>
                     </div>
                   </div>
-                  <!--Widget End-->
-                  <!--Widget Start-->
-                  <!-- <div class="side-widget text-widget">
-                    <h5>Text Widget</h5>
-                    <p>
-                      We are Ecova: eco &amp; environmental community. We need
-                      your support and help to Stop Globar Warning. Few
-                      generations ago it to seemed like world’s resources were
-                      infinite, and the people needed only to access them to
-                      create business, Lorem ipsum dolor it amet consect
-                      adipiscing.
-                    </p>
-                  </div> -->
-                  <!--Widget End-->
+                
                   <!--Widget Start-->
                   <div class="side-widget">
                     <h5>News &amp; Articles</h5>
                     <ul class="lastest-products">
-                      <li>
-                        <img src="/images/flp1.jpg" alt="" />
-                        <strong
-                          ><a href="#"
-                            >How you can keep alive wild animals for...</a
-                          ></strong
-                        >
-                        <span class="pdate"
-                          ><i class="fas fa-calendar-alt"></i> 29 September,
-                          2018</span
-                        >
-                      </li>
-                      <li>
-                        <img src="/images/flp2.jpg" alt="" />
-                        <strong
-                          ><a href="#"
-                            >Eliminate your plastic bottle pollution</a
-                          ></strong
-                        >
-                        <span class="pdate"
-                          ><i class="fas fa-calendar-alt"></i> 29 September,
-                          2018</span
-                        >
-                      </li>
-                      <li>
-                        <img src="/images/flp3.jpg" alt="" />
-                        <strong
-                          ><a href="#"
-                            >How you can keep alive wild animals for...</a
-                          ></strong
-                        >
-                        <span class="pdate"
-                          ><i class="fas fa-calendar-alt"></i> 29 September,
-                          2018</span
-                        >
-                      </li>
+                      <% recentBlogs.forEach(blog=>{ %>
+                        <li>
+                          <img src="<%= blog.bannerImage %>" style="width: 90px; height: 70px" alt="" />
+                          <strong
+                            ><a href="/blog/<%= blog._id%>"
+                              ><%= blog.title %></a
+                            ></strong
+                          >
+                          <span class="pdate"
+                            ><i class="fas fa-calendar-alt"></i> <%= blog.type %> </span
+                          >
+                        </li>
+                      <%  }) %>
+                      
                     </ul>
-                  </div> -->
-                  <!--Widget Start
+                  </div>
                   <!--Widget Start-->
                   
-                  <!--Widget End-->
                 </div>
               </div>
             </div>
@@ -170,3 +143,4 @@
     <!--   JS Files Start  -->    
     <%- include('partials/scripts') %>  </body>
 </html>
+

@@ -4,6 +4,17 @@
     <!-- CSS FILES START -->
     <%- include('partials/head.ejs') %>
     <!-- CSS FILES End -->
+    <style>
+      .banner{
+        max-height: 420px
+      }
+
+      @media (max-width: 500px){
+        .banner{
+        height: 200px !important
+      }
+      }
+    </style>
   </head>
   <body>
     <%- include('partials/navigation.ejs') %>
@@ -24,7 +35,7 @@
                 <!--Blog Single Content Start-->
                 <div class="blog-single-content">
                   <div class="blog-single-thumb">
-                    <img src="<%= event.bannerImage%>" style="width: 825px; height: 410px;" alt="" />
+                    <img src="<%= event.bannerImage%>" class="banner" alt="" />
                   </div>
                   <!-- <div class="single-counter-box">
                     <ul>
