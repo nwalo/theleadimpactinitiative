@@ -35,7 +35,7 @@ app.use(cors());
 
 //MONGOBD CONNECTIONS
 
-mongoose.set("strictQuery", false);
+// mongoose.set("strictQuery", false);
 // mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
 //   useUnifiedTopology: true,
 // });
@@ -252,7 +252,8 @@ app.get("/", async (req, res) => {
     let news = (await Blog.find({})).reverse();
     let posts = (singlPost = []);
     news.slice(0, 3).forEach((i) => {
-      i.title = i.title.length > 30 ? `${i.title.slice(0, 30)} ...` : i.title;
+      i.title = i.title;
+      // i.title = i.title.length > 30 ? `${i.title.slice(0, 30)} ...` : i.title;
       i.type = moment(i.createdAt).format("DD MMMM, YYYY");
       i.content = i.content.slice(0, 40);
       posts.push(i);
@@ -436,13 +437,42 @@ app.get("/donation", (req, res) => {
   res.redirect("/coming-soon");
 });
 
-app.get("/events", (req, res) => {
-  // res.render("events");
-  res.redirect("/coming-soon");
+app.get("/events", async (req, res) => {
+  let event1 = (await Event.find({})).reverse();
+
+  let mainEvent = [];
+  event1.forEach((i) => {
+    i.title = i?.title.length > 50 ? `${i.title.slice(0, 50)} ...` : i?.title;
+    i.content =
+      i?.content.length > 200 ? `${i.content.slice(0, 200)} ... ` : i?.content;
+    i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+    mainEvent.push(i);
+  });
+
+  res.render("events", { events: mainEvent });
+
+  // res.redirect("/coming-soon");
 });
 
-app.get("/events/:id", (req, res) => {
-  res.render("event-details");
+app.get("/events/:id", async (req, res) => {
+  try {
+    let event = await Event.findById(req.params.id);
+    let date = moment(event.createdAt).format("DD MMMM, YYYY");
+
+    let event1 = (await Event.find({})).reverse().slice(0, 3);
+    let recentEvents = [];
+    event1.forEach((i) => {
+      i.title = i?.title.length > 50 ? `${i.title.slice(0, 50)} ...` : i?.title;
+      i.content = i.content.slice(0, 100);
+      i.type = moment(i.createdAt).format("DD MMMM, YYYY");
+      recentEvents.push(i);
+    });
+    // res.render("event-details");
+    res.render("event-details", { event, date, recentEvents });
+  } catch (error) {
+    console.log(error);
+    res.redirect("/");
+  }
 });
 
 app.post("/join", (req, res) => {
