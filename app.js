@@ -467,8 +467,6 @@ app.get("/events", async (req, res) => {
 });
 
 app.get("/events/:id", async (req, res) => {
-  console.log(req.params);
-  console.log(req.query);
   try {
     let event = await Event.findById(req.params.id);
     let date = moment(event.createdAt).format("DD MMMM, YYYY");
