@@ -299,7 +299,7 @@ app.post("/admin", upload.single("file"), (req, res) => {
 
   if (req.body.type === "blog") {
     post = new Blog({
-      title: _.lowerCase(req.body.title),
+      title: _.capitalize(req.body.title),
       type: _.lowerCase(req.body.type),
       content: req.body.content,
       bannerImage: req.body.banner,
