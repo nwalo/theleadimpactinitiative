@@ -19,7 +19,6 @@ const { title } = require("process");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json({ limit: "50mb" }));
-// app.use(express.static(path.join(__dirname + "/public")));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.use(
@@ -39,13 +38,10 @@ mongoose.set("strictQuery", false);
 // mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
 //   useUnifiedTopology: true,
 // });
-
-mongoose.connect(
-  "mongodb+srv://Admin-Nwalo:nobicious97@theleadimpactinitiative.y4osptq.mongodb.net/?retryWrites=true&w=majority",
-  {
-    useUnifiedTopology: true,
-  }
-);
+console.log(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL, {
+  useUnifiedTopology: true,
+});
 
 // SCHEMA DEFINITIONS
 
