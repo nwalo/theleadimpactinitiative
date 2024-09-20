@@ -35,13 +35,13 @@ app.use(cors());
 //MONGOBD CONNECTIONS
 
 mongoose.set("strictQuery", false);
-// mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
-//   useUnifiedTopology: true,
-// });
-
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
   useUnifiedTopology: true,
 });
+
+// mongoose.connect(process.env.MONGO_URL, {
+//   useUnifiedTopology: true,
+// });
 
 // SCHEMA DEFINITIONS
 
@@ -282,10 +282,8 @@ app.get("/account/:page", (req, res) => {
 
 app.get("/admin", (req, res) => {
   if (req.isAuthenticated()) {
-    console.log("yes");
     res.render("admin");
   } else {
-    console.log("no");
     res.redirect("/account/login");
   }
 });
@@ -518,8 +516,6 @@ app.post("/join", (req, res) => {
               email,
               welcomeMsg
             );
-
-            // return res.json({ status: true });
           } else {
             console.log("errr");
           }
