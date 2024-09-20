@@ -611,7 +611,6 @@ app.get("/logout", function (req, res) {
 });
 
 app.post("/register", function (req, res) {
-  // return console.log(req.isAuthenticated(), req);
   if (
     req.isAuthenticated() &&
     (req.user.username === "Millerstephen314@gmail.com" ||
