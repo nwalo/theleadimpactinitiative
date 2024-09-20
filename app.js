@@ -34,14 +34,14 @@ app.use(cors());
 
 //MONGOBD CONNECTIONS
 
-mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
-  useUnifiedTopology: true,
-});
-
-// mongoose.connect(process.env.MONGO_URL, {
+// mongoose.set("strictQuery", false);
+// mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
 //   useUnifiedTopology: true,
 // });
+
+mongoose.connect(process.env.MONGO_URL, {
+  useUnifiedTopology: true,
+});
 
 // SCHEMA DEFINITIONS
 
