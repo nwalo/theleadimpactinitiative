@@ -34,7 +34,7 @@ app.use(cors());
 
 //MONGOBD CONNECTIONS
 
-// mongoose.set("strictQuery", false);
+mongoose.set("strictQuery", false);
 // mongoose.connect("mongodb://localhost:27017/leadImpactDB", {
 //   useUnifiedTopology: true,
 // });
